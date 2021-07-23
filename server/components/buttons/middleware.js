@@ -68,7 +68,7 @@ export function getButtonMiddleware({
 
             tracking(req);
 
-            const { env, clientID, buttonSessionID, cspNonce, debug, buyerCountry, disableFunding, disableCard, userIDToken, amount,
+            const { env, clientID, buttonSessionID, cspNonce, debug, buyerCountry, disableFunding, disableCard, userIDToken, amount, buttonsArray,
                 merchantID: sdkMerchantID, currency, intent, commit, vault, clientAccessToken, basicFundingEligibility, locale,
                 correlationID, cookies, enableFunding, style, paymentMethodToken, branded, fundingSource } = getButtonParams(params, req, res);
 
@@ -80,7 +80,7 @@ export function getButtonMiddleware({
             }
 
             const gqlBatch = graphQLBatch(req, graphQL, { env });
-
+            const hasMultipleButtons = buttonsArray.length > 1;
             const content = smartContent[locale.country][locale.lang] || {};
 
             const facilitatorAccessTokenPromise = getAccessToken(req, clientID);
@@ -108,8 +108,8 @@ export function getButtonMiddleware({
             const personalizationPromise = promiseTimeout(
                 merchantIDPromise.then(merchantID =>
                     resolvePersonalization(req, gqlBatch, {
-                        logger, clientID, merchantID, buyerCountry, locale, buttonSessionID,
-                        currency, intent, commit, vault, label, period, tagline, personalizationEnabled
+                        logger, clientID, merchantID, buyerCountry, locale, buttonSessionID, currency,
+                        intent, commit, vault, label, period, tagline, personalizationEnabled, hasMultipleButtons
                     })),
                 EXPERIMENT_TIMEOUT
             ).catch(() => {

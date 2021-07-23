@@ -51,6 +51,7 @@ const PERSONALIZATION_QUERY = `
         $label: ButtonLabels,
         $period: String
         $taglineEnabled: Boolean
+        $hasMultipleButtons: Boolean
     ) {
         checkoutCustomization(
             clientId: $clientID,
@@ -68,6 +69,7 @@ const PERSONALIZATION_QUERY = `
             buttonLabel: $label,
             installmentPeriod: $period,
             taglineEnabled: $taglineEnabled
+            hasMultipleButtons: $hasMultipleButtons
         ) {
             tagline {
                 text
@@ -101,7 +103,8 @@ export type PersonalizationOptions = {|
     label : string,
     period : ?number,
     tagline? : boolean | string,
-    personalizationEnabled : boolean
+    personalizationEnabled : boolean,
+    hasMultipleButtons? : boolean
 |};
 
 function getDefaultPersonalization() : Personalization {
@@ -133,7 +136,7 @@ function contentToJSX(content : string) : ComponentFunctionType<PersonalizationC
 
 export async function resolvePersonalization(req : ExpressRequest, gqlBatch : GraphQLBatchCall, personalizationOptions : PersonalizationOptions) : Promise<Personalization> {
     let { logger, clientID, merchantID, locale, buyerCountry, buttonSessionID, currency,
-        intent, commit, vault, label, period, tagline, personalizationEnabled } = personalizationOptions;
+        intent, commit, vault, label, period, tagline, personalizationEnabled, hasMultipleButtons } = personalizationOptions;
     
     if (!personalizationEnabled) {
         return getDefaultPersonalization();
@@ -152,7 +155,7 @@ export async function resolvePersonalization(req : ExpressRequest, gqlBatch : Gr
             query:     PERSONALIZATION_QUERY,
             variables: {
                 clientID, merchantID, locale, buyerCountry, currency, intent, commit, vault, ip, cookies, userAgent,
-                buttonSessionID, label, period, taglineEnabled
+                buttonSessionID, label, period, taglineEnabled, hasMultipleButtons
             },
             timeout: PERSONALIZATION_TIMEOUT
         });

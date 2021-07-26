@@ -290,7 +290,7 @@ export function getButtonParams(params : ButtonInputParams, req : ExpressRequest
         env,
         clientID,
         fundingSource,
-        buttonsArray,
+        buttonsArray = [],
         currency,
         intent,
         commit,

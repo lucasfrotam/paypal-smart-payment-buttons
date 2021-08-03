@@ -46,7 +46,7 @@ type ButtonInputParams = {|
     paymentMethodToken? : ?string,
     branded? : boolean,
     fundingSource : $Values<typeof FUNDING>,
-    buttonsArray : $ReadOnlyArray<?$Values<typeof CARD>>
+    renderedButtons : $ReadOnlyArray<$Values<typeof FUNDING>>
 |};
 
 type Style = {|
@@ -86,7 +86,7 @@ type ButtonParams = {|
     paymentMethodToken : ?string,
     branded : ?boolean,
     fundingSource : $Values<typeof FUNDING>,
-    buttonsArray : $ReadOnlyArray<?$Values<typeof CARD>>
+    renderedButtons : $ReadOnlyArray<$Values<typeof FUNDING>>
 |};
 
 function getCookieString(req : ExpressRequest) : string {
@@ -290,7 +290,7 @@ export function getButtonParams(params : ButtonInputParams, req : ExpressRequest
         env,
         clientID,
         fundingSource,
-        buttonsArray = [],
+        renderedButtons = [],
         currency,
         intent,
         commit,
@@ -328,7 +328,7 @@ export function getButtonParams(params : ButtonInputParams, req : ExpressRequest
         env,
         clientID,
         fundingSource,
-        buttonsArray,
+        renderedButtons,
         buyerCountry,
         currency,
         intent,

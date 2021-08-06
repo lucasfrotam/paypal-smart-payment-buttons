@@ -52,7 +52,7 @@ const PERSONALIZATION_QUERY = `
         $period: String,
         $taglineEnabled: Boolean,
         $hasMultipleButtons: Boolean,
-        $renderedButtons: [FundingEligibilityType]
+        $renderedButtons: [FundingType]
     ) {
         checkoutCustomization(
             clientId: $clientID,

@@ -108,8 +108,8 @@ export function getButtonMiddleware({
             const personalizationPromise = promiseTimeout(
                 merchantIDPromise.then(merchantID =>
                     resolvePersonalization(req, gqlBatch, {
-                        logger, clientID, merchantID, buyerCountry, locale, buttonSessionID, currency,
-                        intent, commit, vault, label, period, tagline, personalizationEnabled, hasMultipleButtons
+                        logger, clientID, merchantID, buyerCountry, locale, buttonSessionID, currency, intent, commit,
+                        vault, label, period, tagline, personalizationEnabled, hasMultipleButtons, renderedButtons
                     })),
                 EXPERIMENT_TIMEOUT
             ).catch(() => {

@@ -51,7 +51,6 @@ const PERSONALIZATION_QUERY = `
         $label: ButtonLabels,
         $period: String,
         $taglineEnabled: Boolean,
-        $hasMultipleButtons: Boolean,
         $renderedButtons: [FundingType]
     ) {
         checkoutCustomization(
@@ -69,8 +68,7 @@ const PERSONALIZATION_QUERY = `
             locale: $locale,
             buttonLabel: $label,
             installmentPeriod: $period,
-            taglineEnabled: $taglineEnabled
-            hasMultipleButtons: $hasMultipleButtons,
+            taglineEnabled: $taglineEnabled,
             renderedButtons: $renderedButtons
         ) {
             tagline {
@@ -106,7 +104,6 @@ export type PersonalizationOptions = {|
     period : ?number,
     tagline? : boolean | string,
     personalizationEnabled : boolean,
-    hasMultipleButtons? : boolean,
     renderedButtons: $ReadOnlyArray<$Values<typeof FUNDING>>
 |};
 
@@ -139,7 +136,7 @@ function contentToJSX(content : string) : ComponentFunctionType<PersonalizationC
 
 export async function resolvePersonalization(req : ExpressRequest, gqlBatch : GraphQLBatchCall, personalizationOptions : PersonalizationOptions) : Promise<Personalization> {
     let { logger, clientID, merchantID, locale, buyerCountry, buttonSessionID, currency, intent, commit,
-        vault, label, period, tagline, personalizationEnabled, hasMultipleButtons, renderedButtons } = personalizationOptions;
+        vault, label, period, tagline, personalizationEnabled, renderedButtons } = personalizationOptions;
     
     if (!personalizationEnabled) {
         return getDefaultPersonalization();
@@ -158,7 +155,7 @@ export async function resolvePersonalization(req : ExpressRequest, gqlBatch : Gr
             query:     PERSONALIZATION_QUERY,
             variables: {
                 clientID, merchantID, locale, buyerCountry, currency, intent, commit, vault, ip, cookies, userAgent,
-                buttonSessionID, label, period, taglineEnabled, hasMultipleButtons, renderedButtons
+                buttonSessionID, label, period, taglineEnabled, renderedButtons
             },
             timeout: PERSONALIZATION_TIMEOUT
         });

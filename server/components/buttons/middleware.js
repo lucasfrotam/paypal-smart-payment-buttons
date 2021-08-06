@@ -80,7 +80,6 @@ export function getButtonMiddleware({
             }
 
             const gqlBatch = graphQLBatch(req, graphQL, { env });
-            const hasMultipleButtons = renderedButtons.length > 1;
             const content = smartContent[locale.country][locale.lang] || {};
 
             const facilitatorAccessTokenPromise = getAccessToken(req, clientID);
@@ -109,7 +108,7 @@ export function getButtonMiddleware({
                 merchantIDPromise.then(merchantID =>
                     resolvePersonalization(req, gqlBatch, {
                         logger, clientID, merchantID, buyerCountry, locale, buttonSessionID, currency, intent, commit,
-                        vault, label, period, tagline, personalizationEnabled, hasMultipleButtons, renderedButtons
+                        vault, label, period, tagline, personalizationEnabled, renderedButtons
                     })),
                 EXPERIMENT_TIMEOUT
             ).catch(() => {

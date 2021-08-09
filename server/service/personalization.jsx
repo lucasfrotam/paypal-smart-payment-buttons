@@ -51,7 +51,7 @@ const PERSONALIZATION_QUERY = `
         $label: ButtonLabels,
         $period: String,
         $taglineEnabled: Boolean,
-        $renderedButtons: [FundingType]
+        $renderedButtons: [FundingButtonType]
     ) {
         checkoutCustomization(
             clientId: $clientID,

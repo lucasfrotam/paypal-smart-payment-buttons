@@ -104,7 +104,7 @@ export type PersonalizationOptions = {|
     period : ?number,
     tagline? : boolean | string,
     personalizationEnabled : boolean,
-    renderedButtons: $ReadOnlyArray<$Values<typeof FUNDING>>
+    renderedButtons : $ReadOnlyArray<$Values<typeof FUNDING>>
 |};
 
 function getDefaultPersonalization() : Personalization {

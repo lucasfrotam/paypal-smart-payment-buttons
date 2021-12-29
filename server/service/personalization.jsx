@@ -121,7 +121,7 @@ export type PersonalizationOptions = {|
     renderedButtons : $ReadOnlyArray<$Values<typeof FUNDING>>,
     layout? : string,
     buttonSize? : string,
-    fundingEligibility : FundingEligibilityType,
+    fundingEligibility : FundingEligibilityType
 |};
 
 function getDefaultPersonalization() : Personalization {
@@ -186,7 +186,7 @@ export async function resolvePersonalization(req : ExpressRequest, gqlBatch : Gr
         renderedButtons,
         layout,
         buttonSize,
-        creditRiskVerified,
+        creditRiskVerified
     };
 
     // Fix enum checking errors for strings on graphql by only sending truthy variables
